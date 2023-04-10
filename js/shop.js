@@ -1,3 +1,5 @@
+
+
 // If you have time, you can move this variable "products" to a json or js file and load the data in this js. It will look more professional
 var products = [
    {
@@ -75,6 +77,13 @@ var total = 0;
 function buy(id) {
     // 1. Loop for to the array products to get the item to add to cart
     // 2. Add found product to the cartList array
+
+    products.forEach(element => {
+        if(element.id == id){
+            cartList.push(element)
+        }
+    });
+    console.log(cartList)
 }
 
 // Exercise 2
