@@ -83,14 +83,16 @@ function buy(id) {
             cartList.push(element)
         }
     });
-    console.log(cartList)
+
     calculateTotal()
+    generateCart()
+
 }
 
 // Exercise 2
 function cleanCart() {
     cartList = []
-    console.log(cartList)
+
 }
 
 // Exercise 3
@@ -100,13 +102,41 @@ function calculateTotal() {
     cartList.forEach(element => {
         total += element.price
     });
-    console.log(total)
+
 }
 
 // Exercise 4
 function generateCart() {
     // Using the "cartlist" array that contains all the items in the shopping cart, 
     // generate the "cart" array that does not contain repeated items, instead each item of this array "cart" shows the quantity of product.
+    cart = []
+
+    cartList.forEach(element => {
+        let cartElement = cart.find(elem => elem.id == element.id) ?? null
+
+        if(cartElement != null) {
+            cartElement.quantity ++
+            cartElement.subtotal = cartElement.price * cartElement.quantity
+
+            let index = cart.indexOf(cartElement)
+            cart.splice(index, 1)
+
+            cart.push(cartElement)
+
+        } else {
+            cart.push(
+                {
+                    id: element.id,
+                    name: element.name,
+                    price: element.price,
+                    type: element.type,
+                    quantity: 1,
+                    subtotal: element.price,
+                    subtotalWithDiscount: 30
+                  }
+            )
+        }
+    });
 }
 
 // Exercise 5
