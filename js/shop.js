@@ -9,7 +9,7 @@ var products = [
         type: 'grocery',
         offer: {
             number: 3,
-            percent: 20
+            percent: 4.7619
         }
     },
     {
@@ -25,7 +25,7 @@ var products = [
         type: 'grocery',
         offer: {
             number: 10,
-            percent: 30
+            percent: 33.3333
         }
     },
     {
@@ -86,6 +86,7 @@ function buy(id) {
 
     calculateTotal()
     generateCart()
+    applyPromotionsCart()
 
 }
 
@@ -131,8 +132,9 @@ function generateCart() {
                     price: element.price,
                     type: element.type,
                     quantity: 1,
+                    offer: element.offer,
                     subtotal: element.price,
-                    subtotalWithDiscount: 30
+                    subtotalWithDiscount: 0
                   }
             )
         }
@@ -142,6 +144,28 @@ function generateCart() {
 // Exercise 5
 function applyPromotionsCart() {
     // Apply promotions to each item in the array "cart"
+    /* let cartElement = cart.find(elem => elem.id == 1) */
+    
+    cart.forEach(element => {
+
+        if ((element.id == 1) && (element.quantity >= 3)){
+            
+            element.subtotalWithDiscount = Number((element.subtotal - (element.subtotal * (element.offer.percent / 100))).toFixed(2)) 
+
+            let newElement = element
+            let index = cart.indexOf(element)
+            cart.splice(index, 1, newElement)
+
+        }
+        if((element.id == 3) && (element.quantity >= 10)){
+            element.subtotalWithDiscount = Number((element.subtotal - (element.subtotal * (element.offer.percent / 100))).toFixed(2))
+
+            let newElement = element
+            let index = cart.indexOf(element)
+            cart.splice(index, 1, newElement)
+
+        }
+    });
 }
 
 // Exercise 6
