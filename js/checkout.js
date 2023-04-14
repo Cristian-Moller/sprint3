@@ -1,4 +1,4 @@
-// Exercise 6
+// Exercise 7
 let fName = document.getElementById("fName")
 let fEmail = document.getElementById("fEmail")
 let fAddress = document.getElementById("fAddress")
@@ -62,6 +62,14 @@ function validate(e) {
 	address: /^[a-zA-ZÀ-ÿ\s0-9\_\-]{3,30}$/, // Letters, numbers, hyphen and underscore
 	password: /^.{4,8}$/, // 4 to 8 digits.
 	phone: /^\d{9,14}$/ // 9 to 14 numbers.
+}
+
+function validateInput(regExpression, input){
+	if(regExpression.test(input.value)){
+		styleValid(input)
+	} else {
+		styleInvalid(input)
+	}
 }
 
 form.addEventListener('submit', (e) => {
@@ -128,10 +136,3 @@ function styleInvalid(input){
 	}
 }
 
-function validateInput(regExpression, input){
-	if(regExpression.test(input.value)){
-		styleValid(input)
-	} else {
-		styleInvalid(input)
-	}
-}

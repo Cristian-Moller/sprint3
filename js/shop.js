@@ -146,7 +146,7 @@ function generateCart() {
                     offer: element.offer,
                     subtotal: element.price,
                     subtotalWithDiscount: 0
-                  }
+                }
             )
         }
     });
@@ -203,11 +203,42 @@ function printCart() {
 
 // ** Nivell II **
 
-// Exercise 7
+// Exercise 8
 function addToCart(id) {
     // Refactor previous code in order to simplify it 
     // 1. Loop for to the array products to get the item to add to cart
     // 2. Add found product to the cart array or update its quantity in case it has been added previously.
+    products.forEach(element => {
+        if(element.id == id){
+            let cartElement = cart.find(elem => elem.id == element.id) ?? null
+
+            if(cartElement != null) {
+                cartElement.quantity ++
+                cartElement.subtotal = cartElement.price * cartElement.quantity
+
+                let index = cart.indexOf(cartElement)
+                cart.splice(index, 1)
+
+                cart.push(cartElement)
+
+            } else {
+                cart.push(
+                    {
+                        id: element.id,
+                        name: element.name,
+                        price: element.price,
+                        type: element.type,
+                        quantity: 1,
+                        offer: element.offer,
+                        subtotal: element.price,
+                        subtotalWithDiscount: 0
+                    }
+                )
+            }
+        }
+    });
+    applyPromotionsCart()
+    calculateTotal()
 }
 
 // Exercise 8
