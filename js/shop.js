@@ -94,23 +94,27 @@ function cleanCart() {
     cartList = []
     cart = []
     printCart()
-
+    calculateTotal()
 }
 
 // Exercise 3
 function calculateTotal() {
     // Calculate total price of the cart using the "cartList" array
-    let total = 0
+    let totalprice = 0
+    let totalquantity = 0
     cart.forEach(element => {
         if ((element.id == 1) && (element.quantity >= 3)){
-            total += element.subtotalWithDiscount
+            totalprice += element.subtotalWithDiscount
         } else if((element.id == 3) && (element.quantity >= 10)){
-            total += element.subtotalWithDiscount
+            totalprice += element.subtotalWithDiscount
         } else {
-            total += element.subtotal
+            totalprice += element.subtotal
         }
+        totalquantity += element.quantity
     });
-    document.getElementById('total_price').innerHTML = total
+    document.getElementById('total_price').innerHTML = totalprice
+    document.getElementById('count_product').innerHTML = totalquantity
+    
 }
 
 // Exercise 4
