@@ -114,7 +114,7 @@ function calculateTotal() {
     });
     document.getElementById('total_price').innerHTML = totalprice
     document.getElementById('count_product').innerHTML = totalquantity
-    
+
 }
 
 // Exercise 4
@@ -155,7 +155,7 @@ function generateCart() {
 // Exercise 5
 function applyPromotionsCart() {
     // Apply promotions to each item in the array "cart"
-    /* let cartElement = cart.find(elem => elem.id == 1) */
+
     
     cart.forEach(element => {
 
@@ -184,7 +184,7 @@ function printCart() {
     // Fill the shopping cart modal manipulating the shopping cart dom
     let print = cart.map(function(elem){
         let discount = 0
-        if(elem.subtotalWithDiscount == 0){
+        if((elem.subtotalWithDiscount == 0) || ((elem.id == 1) && (elem.quantity < 3)) || ((elem.id == 3) && (elem.quantity < 10))){
             discount = elem.subtotal
         } else {
             discount = elem.subtotalWithDiscount
@@ -194,10 +194,11 @@ function printCart() {
                     '<td>' + elem.price + '</td>' +
                     '<td>' + elem.quantity + '</td>' +
                     '<td>' + discount  + '</td>' +
+                    '<td><i class="fa fa-trash" aria-hidden="true" onclick="removeFromCart(' + elem.id + ')"></i></td>' +
                 '</tr>'
     })
     document.getElementById('cart_list').innerHTML = print.join('')
-    
+
 }
 
 
@@ -245,6 +246,24 @@ function addToCart(id) {
 function removeFromCart(id) {
     // 1. Loop for to the array products to get the item to add to cart
     // 2. Add found product to the cartList array
+    let cartElement = cart.find(elem => elem.id == id)
+    
+    if(cartElement.quantity >= 1){
+        cartElement.quantity--
+        cartElement.subtotal = cartElement.price * cartElement.quantity
+
+        let index = cart.indexOf(cartElement)
+        cart.splice(index, 1)
+
+        cart.push(cartElement)
+    }
+    if(cartElement.quantity == 0){
+        let index = cart.indexOf(cartElement)
+        cart.splice(index, 1)
+    }
+
+    applyPromotionsCart()
+    printCart()
 }
 
 function open_modal(){
